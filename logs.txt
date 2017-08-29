@@ -1,0 +1,221 @@
+grader@ubuntu-512mb-sfo1-01:~/FSND-Virtual-Env/FSND-Virtual-Machine/vagrant$ ls
+items_catalog  items_catalog.zip  Vagrantfile
+grader@ubuntu-512mb-sfo1-01:~/FSND-Virtual-Env/FSND-Virtual-Machine/vagrant$ cd items_catalog/
+grader@ubuntu-512mb-sfo1-01:~/FSND-Virtual-Env/FSND-Virtual-Machine/vagrant/items_catalog$ ls
+client_secrets.json  finalProject.py  lotsofitems.py  README.txt  templates
+database_setup.py    itemscatalog.db  notes           static
+grader@ubuntu-512mb-sfo1-01:~/FSND-Virtual-Env/FSND-Virtual-Machine/vagrant/items_catalog$ clear
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+grader@ubuntu-512mb-sfo1-01:~/FSND-Virtual-Env/FSND-Virtual-Machine/vagrant/items_catalog$ ls
+client_secrets.json  finalProject.py  lotsofitems.py  README.txt  templates
+database_setup.py    itemscatalog.db  notes           static
+grader@ubuntu-512mb-sfo1-01:~/FSND-Virtual-Env/FSND-Virtual-Machine/vagrant/items_catalog$ sudo mkdir /var/www/items_catalog
+grader@ubuntu-512mb-sfo1-01:~/FSND-Virtual-Env/FSND-Virtual-Machine/vagrant/items_catalog$ sudo cp -r . /var/www/items_catalog/
+grader@ubuntu-512mb-sfo1-01:~/FSND-Virtual-Env/FSND-Virtual-Machine/vagrant/items_catalog$ ls
+client_secrets.json  finalProject.py  lotsofitems.py  README.txt  templates
+database_setup.py    itemscatalog.db  notes           static
+grader@ubuntu-512mb-sfo1-01:~/FSND-Virtual-Env/FSND-Virtual-Machine/vagrant/items_catalog$ cd ..
+grader@ubuntu-512mb-sfo1-01:~/FSND-Virtual-Env/FSND-Virtual-Machine/vagrant$ ls
+items_catalog  items_catalog.zip  Vagrantfile
+grader@ubuntu-512mb-sfo1-01:~/FSND-Virtual-Env/FSND-Virtual-Machine/vagrant$ cd /var/www
+grader@ubuntu-512mb-sfo1-01:/var/www$ ls
+html  items_catalog
+grader@ubuntu-512mb-sfo1-01:/var/www$ cd items_catalog/
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ ls
+client_secrets.json  finalProject.py  lotsofitems.py  README.txt  templates
+database_setup.py    itemscatalog.db  notes           static
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ cd ..
+grader@ubuntu-512mb-sfo1-01:/var/www$ cd items_catalog/
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ ls
+client_secrets.json  finalProject.py  lotsofitems.py  README.txt  templates
+database_setup.py    itemscatalog.db  notes           static
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ vim catalog.wsgi
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ sudo vim catalog.wsgi
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ ls
+catalog.wsgi         database_setup.py  itemscatalog.db  notes       static
+client_secrets.json  finalProject.py    lotsofitems.py   README.txt  templates
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ cd /etc/apache2/sites-available/items_catalog.conf
+-bash: cd: /etc/apache2/sites-available/items_catalog.conf: No such file or directory
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ cd /etc/apache2
+grader@ubuntu-512mb-sfo1-01:/etc/apache2$ cd sites-available
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ ls
+000-default.conf  default-ssl.conf
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo vim items_catalog.conf
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo a2dissite 000-default.conf 
+Site 000-default disabled.
+To activate the new configuration, you need to run:
+  service apache2 reload
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo a2ensite items_catalog
+Enabling site items_catalog.
+To activate the new configuration, you need to run:
+  service apache2 reload
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo service apache2 reload
+Job for apache2.service failed because the control process exited with error code. See "systemctl status apache2.service" and "journalctl -xe" for details.
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo apachectl configtest
+AH00526: Syntax error on line 3 of /etc/apache2/sites-enabled/items_catalog.conf:
+ServerAdmin takes one argument, The email address of the server administrator
+Action 'configtest' failed.
+The Apache error log may have more information.
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo vim items_catalog.config
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo vim items_catalog.conf
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo apachectl configtest
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+Syntax OK
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo restart apache2
+sudo: restart: command not found
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo service apache2 reload
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo tail
+^C
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo tail /var/log
+tail: error reading '/var/log': Is a directory
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo tail /var/log/apache2/error.log
+[Tue Aug 29 04:43:22.291501 2017] [wsgi:error] [pid 6553:tid 139961927456512] [client 96.49.104.78:51316]     return _ConnectionRecord(self), referer: http://104.131.146.179/
+[Tue Aug 29 04:43:22.291516 2017] [wsgi:error] [pid 6553:tid 139961927456512] [client 96.49.104.78:51316]   File "/usr/lib/python2.7/dist-packages/sqlalchemy/pool.py", line 449, in __init__, referer: http://104.131.146.179/
+[Tue Aug 29 04:43:22.291537 2017] [wsgi:error] [pid 6553:tid 139961927456512] [client 96.49.104.78:51316]     self.connection = self.__connect(), referer: http://104.131.146.179/
+[Tue Aug 29 04:43:22.291552 2017] [wsgi:error] [pid 6553:tid 139961927456512] [client 96.49.104.78:51316]   File "/usr/lib/python2.7/dist-packages/sqlalchemy/pool.py", line 607, in __connect, referer: http://104.131.146.179/
+[Tue Aug 29 04:43:22.291573 2017] [wsgi:error] [pid 6553:tid 139961927456512] [client 96.49.104.78:51316]     connection = self.__pool._invoke_creator(self), referer: http://104.131.146.179/
+[Tue Aug 29 04:43:22.291588 2017] [wsgi:error] [pid 6553:tid 139961927456512] [client 96.49.104.78:51316]   File "/usr/lib/python2.7/dist-packages/sqlalchemy/engine/strategies.py", line 97, in connect, referer: http://104.131.146.179/
+[Tue Aug 29 04:43:22.291610 2017] [wsgi:error] [pid 6553:tid 139961927456512] [client 96.49.104.78:51316]     return dialect.connect(*cargs, **cparams), referer: http://104.131.146.179/
+[Tue Aug 29 04:43:22.291625 2017] [wsgi:error] [pid 6553:tid 139961927456512] [client 96.49.104.78:51316]   File "/usr/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 385, in connect, referer: http://104.131.146.179/
+[Tue Aug 29 04:43:22.291646 2017] [wsgi:error] [pid 6553:tid 139961927456512] [client 96.49.104.78:51316]     return self.dbapi.connect(*cargs, **cparams), referer: http://104.131.146.179/
+[Tue Aug 29 04:43:22.291689 2017] [wsgi:error] [pid 6553:tid 139961927456512] [client 96.49.104.78:51316] OperationalError: (sqlite3.OperationalError) unable to open database file, referer: http://104.131.146.179/
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo apt-get install postgresql
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+postgresql is already the newest version (9.5+173).
+The following package was automatically installed and is no longer required:
+  grub-pc-bin
+Use 'sudo apt autoremove' to remove it.
+0 upgraded, 0 newly installed, 0 to remove and 6 not upgraded.
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo vim /etc/postgresql/9.5/main/pg_hba.conf
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo su - psql 
+No passwd entry for user 'psql'
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ sudo su - postgres
+postgres@ubuntu-512mb-sfo1-01:~$ psql
+psql (9.5.8)
+Type "help" for help.
+
+postgres=# CREATE USER catalog WITH PASSWORD 'catalog';
+CREATE ROLE
+postgres=# CREATE DATABASE catalog WITH OWNER catalog;
+CREATE DATABASE
+postgres=# \c catalog
+You are now connected to database "catalog" as user "postgres".
+catalog=# REVOKE ALL ON SCHEMA public FROM public
+catalog-# ;
+REVOKE
+catalog=# GRANT ALL ON SCHEME public TO catalog;
+ERROR:  syntax error at or near "public"
+LINE 1: GRANT ALL ON SCHEME public TO catalog;
+                            ^
+catalog=# GRANT ALL ON SCHEMA public TO catalog;
+GRANT
+catalog=# exit
+catalog-# \q
+postgres@ubuntu-512mb-sfo1-01:~$ exit
+logout
+grader@ubuntu-512mb-sfo1-01:/etc/apache2/sites-available$ cd /var/www/items_catalog/
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ ls
+catalog.wsgi         database_setup.py  itemscatalog.db  notes       static
+client_secrets.json  finalProject.py    lotsofitems.py   README.txt  templates
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ sudo vim database_setup.py
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ sudo python database_setup.py
+Traceback (most recent call last):
+  File "database_setup.py", line 55, in <module>
+    Base.metadata.create_all(engine)
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/sql/schema.py", line 3695, in create_all
+    tables=tables)
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1855, in _run_visitor
+    with self._optional_conn_ctx_manager(connection) as conn:
+  File "/usr/lib/python2.7/contextlib.py", line 17, in __enter__
+    return self.gen.next()
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1848, in _optional_conn_ctx_manager
+    with self.contextual_connect() as conn:
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 2039, in contextual_connect
+    self._wrap_pool_connect(self.pool.connect, None),
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 2078, in _wrap_pool_connect
+    e, dialect, self)
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1405, in _handle_dbapi_exception_noconnection
+    exc_info
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 200, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 2074, in _wrap_pool_connect
+    return fn()
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/pool.py", line 376, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/pool.py", line 713, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/pool.py", line 480, in checkout
+    rec = pool._do_get()
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/pool.py", line 1060, in _do_get
+    self._dec_overflow()
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/util/langhelpers.py", line 60, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/pool.py", line 1057, in _do_get
+    return self._create_connection()
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/pool.py", line 323, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/pool.py", line 449, in __init__
+    self.connection = self.__connect()
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/pool.py", line 607, in __connect
+    connection = self.__pool._invoke_creator(self)
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/engine/strategies.py", line 97, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/usr/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 385, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+  File "/usr/lib/python2.7/dist-packages/psycopg2/__init__.py", line 164, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, async=async)
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) FATAL:  role "root" does not exist
+
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ sudo vim database_setup.py
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ sudo python database_setup.py
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ ls
+catalog.wsgi         database_setup.py  itemscatalog.db  notes       static
+client_secrets.json  finalProject.py    lotsofitems.py   README.txt  templates
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ sudo vim finalProject.py
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ sudo vim client_secrets.json 
+grader@ubuntu-512mb-sfo1-01:/var/www/items_catalog$ sudo -u postgres psql
+psql (9.5.8)
+Type "help" for help.
+
+postgres=# \c catalog
+You are now connected to database "catalog" as user "postgres".
+catalog=# /dt
+catalog-# /dt/
+catalog-# ;
+ERROR:  syntax error at or near "/"
+LINE 1: /dt
+        ^
+catalog=# \dt;
+          List of relations
+ Schema |   Name   | Type  |  Owner  
+--------+----------+-------+---------
+ public | category | table | catalog
+ public | item     | table | catalog
+ public | user     | table | catalog
+(3 rows)
+
+catalog=# SELECT * FROM category;
+ name | id | user_id 
+------+----+---------
+ linh |  1 |       1
+(1 row)
+
+catalog=# ex
+catalog-# ex
+catalog-# packet_write_wait: Connection to 104.131.146.179: Broken pipe
+Linhs-MacBook-Air:.ssh linhphan$ 
