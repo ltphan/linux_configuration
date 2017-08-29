@@ -2,6 +2,8 @@
 
 We are deploying a Flask application onto Digital Ocean. The aim of the project was to host a web application and configure it to serve our web app and protext it against basic attack vectors. Following this documentation will give you steps in creating your own instance to the application. Currently using ubuntu 16.04.3 x64
 
+Grader IP: ssh grader@104.131.146 -p 2200
+
 IP address: 104.131.146
 Port: 2200
 
